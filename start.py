@@ -2,12 +2,11 @@ import telebot
 import subprocess
 import datetime
 import os
-# import time as tm
 from keep_alive import keep_alive
 
 keep_alive()
-bot = telebot.TeleBot('7345507165:AAEuQT9VLAC_72kiQRyIQa2-L05p7sjCysY')
-admin_id = {"1027596128"}
+bot = telebot.TeleBot('7345507165:AAHrfsA03J-ewPL3TCrdK3TOasJpiUZcybA')
+admin_id = {"1027596128", "383167272", "1157789561", "1952587369", "1068178978"}
 USER_FILE = "users.txt"
 LOG_FILE = "log.txt"
 
@@ -205,7 +204,7 @@ def handle_bgmi(message):
             target = command[1]
             port = int(command[2])
             time = int(command[3])
-            if time > 181:
+            if time > 241:
                 response = "Error: Time interval must be less than 180."
             else:
                 record_command_logs(user_id, '/bgmi', target, port, time)
