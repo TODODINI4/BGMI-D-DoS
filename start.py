@@ -14,23 +14,25 @@ ADMIN_FILE = "admins.txt"
 LOG_FILE = "log.txt"
 
 def read_users():
+    # users = []
     try:
         with open(USER_FILE, "r") as file:
             for line in file:
                 parts = line.strip().split(', ')
-                if len(parts) == 2:  # Ensure both user ID and expiration date are present
+                if len(parts) == 2:
                     user_id, expiration_date_str = parts
                     try:
                         expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d')
-                        users.append((user_id, expiration_date))
+                        # users.append((user_id, expiration_date))
+                        return user_id
                     except ValueError:
                         pass
-    except FileNotFoundError:
-        pass
-    return users
-            # return file.read().splitlines()
     # except FileNotFoundError:
-        # return []
+        # pass
+    # return users
+            # return file.read().splitlines()
+    except FileNotFoundError:
+        return []
 
 def read_admins():
     try:
