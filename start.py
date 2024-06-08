@@ -7,14 +7,12 @@ from keep_alive import keep_alive
 
 keep_alive()
 bot = telebot.TeleBot('7345507165:AAHrfsA03J-ewPL3TCrdK3TOasJpiUZcybA')
-admin_id = {"1027596128", "383167272", "1157789561", "1952587369", "1068178978"}
 USER_FILE = "users.txt"
-#admin_id = "admins.txt"
 ADMIN_FILE = "admins.txt"
 LOG_FILE = "log.txt"
 
 def read_users():
-    # users = []
+    user_ids = []
     try:
         with open(USER_FILE, "r") as file:
             for line in file:
@@ -23,16 +21,12 @@ def read_users():
                     user_id, expiration_date_str = parts
                     try:
                         expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d')
-                        # users.append((user_id, expiration_date))
-                        return user_id
+                        user_ids.append(user_id)
                     except ValueError:
                         pass
-    # except FileNotFoundError:
-        # pass
-    # return users
-            # return file.read().splitlines()
     except FileNotFoundError:
-        return []
+        pass
+    return user_ids
 
 def read_admins():
     try:
@@ -40,21 +34,6 @@ def read_admins():
             return file.read().splitlines()
     except FileNotFoundError:
         return []
-
-def read_free_users():
-    try:
-        with open(FREE_USER_FILE, "r") as file:
-            lines = file.read().splitlines()
-            for line in lines:
-                if line.strip():
-                    user_info = line.split()
-                    if len(user_info) == 2:
-                        user_id, credits = user_info
-                        free_user_credits[user_id] = int(credits)
-                    else:
-                        print(f"Ignoring invalid line in free user file: {line}")
-    except FileNotFoundError:
-        pass
 
 allowed_user_ids = read_users()
 admin_id = allowed_admin_ids = read_admins()
@@ -208,45 +187,28 @@ def clear_logs_command(message):
 def show_all_users(message):
     user_id = str(message.chat.id)
     if user_id in admin_id:
-        try:
-            user_ids = read_users()
-            if user_ids:
-                response = "Authorized Users:\n"
-                for user_id in user_ids:
-                    try:
-                        user_info = bot.get_chat(int(user_id))
-                        username = user_info.username
-                        response += f"- @{username} (ID: {user_id})\n"
-                    except Exception as e:
-                        response += f"- User ID: {user_id}\n"
-            else:
-                response = "No data found "
-        except FileNotFoundError:
-            response = "No data found "
+        for user_id in allowed_user_ids:
+            try:
+                user_info = bot.get_chat(int(user_id))
+                username = user_info.username
+                response += f"Authorized Users:\n- @{username} (ID: {user_id})\n"
+            except Exception as e:
+                response += f"- User ID: {user_id}\n"
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['alladmins'])
 def show_all_admins(message):
-    admin_id = str(message.chat.id)
-    if admin_id in admin_id:
-        try:
-            with open(ADMIN_FILE, "r") as file:
-                admin_ids = file.read().splitlines()
-                if admin_ids:
-                    response = "Authorized Admins :\n"
-                    for admin_id in admin_ids:
-                        try:
-                            admin_info = bot.get_chat(int(admin_id))
-                            username = admin_info.username
-                            response += f"- @{username} (ID: {admin_id})\n"
-                        except Exception as e:
-                            response += f"- User ID: {admin_id}\n"
-                else:
-                    response = "No data found "
-        except FileNotFoundError:
-            response = "No data found "
+    user_id = str(message.chat.id)
+    if user_id in admin_id:
+        for admin_id in allowed_user_ids:
+            try:
+                admin_info = bot.get_chat(int(user_id))
+                username = admin_info.username
+                response += f"Authorized Users:\n- @{username} (ID: {user_id})\n"
+            except Exception as e:
+                response += f"- User ID: {admin_id}\n"
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
     bot.reply_to(message, response)
