@@ -7,9 +7,10 @@ from keep_alive import keep_alive
 
 keep_alive()
 bot = telebot.TeleBot('7345507165:AAHrfsA03J-ewPL3TCrdK3TOasJpiUZcybA')
-# admin_id = {"1027596128", "383167272", "1157789561", "1952587369", "1068178978"}
+admin_id = {"1027596128", "383167272", "1157789561", "1952587369", "1068178978"}
 USER_FILE = "users.txt"
-admin_id = ADMIN_FILE = "admins.txt"
+#admin_id = "admins.txt"
+ADMIN_FILE = "admins.txt"
 LOG_FILE = "log.txt"
 
 def read_users():
@@ -42,7 +43,7 @@ def read_free_users():
         pass
 
 allowed_user_ids = read_users()
-allowed_admin_ids = read_admins()
+admin_id = allowed_admin_ids = read_admins()
 
 def log_command(user_id, target, port, time):
     user_info = bot.get_chat(user_id)
