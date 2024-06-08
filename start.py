@@ -209,19 +209,18 @@ def show_all_users(message):
     user_id = str(message.chat.id)
     if user_id in admin_id:
         try:
-            with open(USER_FILE, "r") as file:
-                user_ids = file.read().splitlines()
-                if user_ids:
-                    response = "Authorized Users:\n"
-                    for user_id in user_ids:
-                        try:
-                            user_info = bot.get_chat(int(user_id))
-                            username = user_info.username
-                            response += f"- @{username} (ID: {user_id})\n"
-                        except Exception as e:
-                            response += f"- User ID: {user_id}\n"
-                else:
-                    response = "No data found "
+            user_ids = read_users()
+            if user_ids:
+                response = "Authorized Users:\n"
+                for user_id in user_ids:
+                    try:
+                        user_info = bot.get_chat(int(user_id))
+                        username = user_info.username
+                        response += f"- @{username} (ID: {user_id})\n"
+                    except Exception as e:
+                        response += f"- User ID: {user_id}\n"
+            else:
+                response = "No data found "
         except FileNotFoundError:
             response = "No data found "
     else:
