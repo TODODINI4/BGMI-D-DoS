@@ -187,11 +187,12 @@ def clear_logs_command(message):
 def show_all_users(message):
     user_id = str(message.chat.id)
     if user_id in admin_id:
+        response = "Authorized Users:\n"
         for user_id in allowed_user_ids:
             try:
                 user_info = bot.get_chat(int(user_id))
                 username = user_info.username
-                response += f"Authorized Users:\n- @{username} (ID: {user_id})\n"
+                response += f"- @{username} (ID: {user_id})\n"
             except Exception as e:
                 response += f"- User ID: {user_id}\n"
     else:
@@ -202,11 +203,12 @@ def show_all_users(message):
 def show_all_admins(message):
     user_id = str(message.chat.id)
     if user_id in admin_id:
+        response = "Authorized Users:\n"
         for admin_id in allowed_user_ids:
             try:
                 admin_info = bot.get_chat(int(user_id))
                 username = admin_info.username
-                response += f"Authorized Users:\n- @{username} (ID: {user_id})\n"
+                response += f"- @{username} (ID: {user_id})\n"
             except Exception as e:
                 response += f"- User ID: {admin_id}\n"
     else:
