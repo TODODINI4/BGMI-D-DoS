@@ -204,7 +204,7 @@ def show_all_admins(message):
     user_id = str(message.chat.id)
     if user_id in allowed_admin_ids:
         response = "Authorized Users:\n"
-        for admin_id in allowed_user_ids:
+        for user_id in allowed_admin_ids:
             try:
                 admin_info = bot.get_chat(int(user_id))
                 username = admin_info.username
