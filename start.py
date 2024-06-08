@@ -1,18 +1,27 @@
 import telebot
 import subprocess
-import datetime
+from datetime import datetime, timedelta
+import time
 import os
 from keep_alive import keep_alive
 
 keep_alive()
 bot = telebot.TeleBot('7345507165:AAHrfsA03J-ewPL3TCrdK3TOasJpiUZcybA')
-admin_id = {"1027596128", "383167272", "1157789561", "1952587369", "1068178978"}
+# admin_id = {"1027596128", "383167272", "1157789561", "1952587369", "1068178978"}
 USER_FILE = "users.txt"
+admin_id = ADMIN_FILE = "admins.txt"
 LOG_FILE = "log.txt"
 
 def read_users():
     try:
         with open(USER_FILE, "r") as file:
+            return file.read().splitlines()
+    except FileNotFoundError:
+        return []
+
+def read_admins():
+    try:
+        with open(ADMIN_FILE, "r") as file:
             return file.read().splitlines()
     except FileNotFoundError:
         return []
@@ -33,6 +42,7 @@ def read_free_users():
         pass
 
 allowed_user_ids = read_users()
+allowed_admin_ids = read_admins()
 
 def log_command(user_id, target, port, time):
     user_info = bot.get_chat(user_id)
@@ -73,19 +83,47 @@ def add_user(message):
     user_id = str(message.chat.id)
     if user_id in admin_id:
         command = message.text.split()
-        if len(command) > 1:
+        if len(command) > 2:
             user_to_add = command[1]
-            if user_to_add not in allowed_user_ids:
-                allowed_user_ids.append(user_to_add)
-                with open(USER_FILE, "a") as file:
-                    file.write(f"{user_to_add}\n")
-                response = f"User {user_to_add} Added Successfully 👍."
-            else:
-                response = "User already exists 🤦‍♂️."
+            try:
+                days = int(command[2])
+                expiration_date = (datetime.now() + timedelta(days=days)).strftime('%Y-%m-%d')
+                user_entry = f"{user_to_add}, {expiration_date}"
+                if not any(user_to_add in user for user in allowed_user_ids):
+                    allowed_user_ids.append(user_entry)
+                    with open(USER_FILE, 'w') as file:
+                        for user in allowed_user_ids:
+                            file.write(f"{user}\n")
+                    response = f"User {user_to_add} Added Successfully with an expiration of {days} days 👍."
+                else:
+                    response = "User already exists ."
+            except ValueError:
+                response = "Invalid number of days specified 🤦."
         else:
-            response = "Please specify a user ID to add 😒."
+            response = "Please specify a user ID to add 😒.\n✅ Usage: /add <userid> <days>"
     else:
-        response = "ONLY OWNER CAN USE."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+
+    bot.reply_to(message, response)
+
+@bot.message_handler(commands=['admin_add'])
+def add_admin(message):
+    new_admin_id = str(message.chat.id)
+    if new_admin_id in admin_id:
+        command = message.text.split()
+        if len(command) > 1:
+            admin_to_add = command[1]
+            if admin_to_add not in allowed_admin_ids:
+                allowed_admin_ids.append(admin_to_add)
+                with open(ADMIN_FILE, "a") as file:
+                    file.write(f"{admin_to_add}\n")
+                response = f"Admin {admin_to_add} Added Successfully 👍."
+            else:
+                response = "Admin already exists 🤦."
+        else:
+            response = "Please specify a Admin's user ID to add 😒.\n✅ Usage: /admin_add <userid>"
+    else:
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
 
     bot.reply_to(message, response)
 
@@ -107,10 +145,31 @@ def remove_user(message):
         else:
             response = '''Please Specify A User ID to Remove. \n✅ Usage: /remove <userid>'''
     else:
-        response = "ONLY OWNER CAN USE."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
 
     bot.reply_to(message, response)
 
+@bot.message_handler(commands=['admin_remove'])
+def remove_admin(message):
+    admin_id = str(message.chat.id)
+    if admin_id in admin_id:
+        command = message.text.split()
+        if len(command) > 1:
+            admin_to_remove = command[1]
+            if admin_to_remove in allowed_admin_ids:
+                allowed_admin_ids.remove(admin_to_remove)
+                with open(ADMIN_FILE, "w") as file:
+                    for admin_id in allowed_admin_ids:
+                        file.write(f"{admin_id}\n")
+                response = f"User {admin_to_remove} removed successfully 👍."
+            else:
+                response = f"User {admin_to_remove} not found in the list ."
+        else:
+            response = '''Please Specify A User ID to Remove. \n✅ Usage: /remove <userid>'''
+    else:
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+
+    bot.reply_to(message, response)
 
 @bot.message_handler(commands=['clearlogs'])
 def clear_logs_command(message):
@@ -127,7 +186,7 @@ def clear_logs_command(message):
         except FileNotFoundError:
             response = "Logs are already cleared ."
     else:
-        response = "ONLY OWNER CAN USE."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['allusers'])
@@ -151,7 +210,31 @@ def show_all_users(message):
         except FileNotFoundError:
             response = "No data found "
     else:
-        response = "ONLY OWNER CAN USE."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+    bot.reply_to(message, response)
+
+@bot.message_handler(commands=['alladmins'])
+def show_all_admins(message):
+    admin_id = str(message.chat.id)
+    if admin_id in admin_id:
+        try:
+            with open(ADMIN_FILE, "r") as file:
+                admin_ids = file.read().splitlines()
+                if admin_ids:
+                    response = "Authorized Admins :\n"
+                    for admin_id in admin_ids:
+                        try:
+                            admin_info = bot.get_chat(int(admin_id))
+                            username = admin_info.username
+                            response += f"- @{username} (ID: {admin_id})\n"
+                        except Exception as e:
+                            response += f"- User ID: {admin_id}\n"
+                else:
+                    response = "No data found "
+        except FileNotFoundError:
+            response = "No data found "
+    else:
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['logs'])
@@ -169,7 +252,7 @@ def show_recent_logs(message):
             response = "No data found "
             bot.reply_to(message, response)
     else:
-        response = "ONLY OWNER CAN USE."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
         bot.reply_to(message, response)
 
 @bot.message_handler(commands=['id'])
@@ -268,7 +351,7 @@ def welcome_rules(message):
 @bot.message_handler(commands=['plan'])
 def welcome_plan(message):
     user_name = message.from_user.first_name
-    response = f'''Offer :\n1) 1 Day - ₹50/Acc,\n2) 3 Days - ₹120/Acc,\n3) 7 Days - ₹500/Acc,\n4) 15 Days - ₹1000/Acc,5) 30 Days - ₹1800/Acc,\n6) 60 Days (Full Season) - ₹3500/Acc\n\n{user_name} can Claim this offer,\nDm to make purchase @PANEL_EXPERT / @DARKESPYT_ROBOT\n\n\nNote : All Currencies Accepted via Binance.'''
+    response = f'''Offer :\n1) 3 Days - ₹120/Acc,\n2) 7 Days - ₹500/Acc,\n3) 15 Days - ₹1000/Acc,\n4) 30 Days - ₹1800/Acc,\n5) 60 Days (Full Season) - ₹3500/Acc\n\n{user_name} can Claim this offer,\nDm to make purchase @PANEL_EXPERT / @DARKESPYT_ROBOT\n\n\nNote : All Currencies Accepted via Binance.'''
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['admincmd'])
@@ -295,7 +378,7 @@ def broadcast_message(message):
         else:
             response = "🤖 Please Provide A Message To Broadcast."
     else:
-        response = "ONLY OWNER CAN USE."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
 
     bot.reply_to(message, response)
 
@@ -305,3 +388,12 @@ while True:
         bot.polling(none_stop=True)
     except Exception as e:
         print(e)
+while True:
+    now = datetime.now()
+    allowed_user_ids = [
+        user for user in allowed_user_ids
+        if datetime.strptime(user.split(',')[1], '%Y-%m-%d') >= now
+    ]
+    with open(USER_FILE, 'w') as file:
+        for user in allowed_user_ids:
+            file.write(f"{user}\n")
