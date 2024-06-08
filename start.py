@@ -36,7 +36,7 @@ def read_admins():
         return []
 
 allowed_user_ids = read_users()
-admin_id = allowed_admin_ids = read_admins()
+allowed_admin_ids = read_admins()
 
 def log_command(user_id, target, port, time):
     user_info = bot.get_chat(user_id)
@@ -75,7 +75,7 @@ def record_command_logs(user_id, command, target=None, port=None, time=None):
 @bot.message_handler(commands=['add'])
 def add_user(message):
     user_id = str(message.chat.id)
-    if user_id in admin_id:
+    if user_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 2:
             user_to_add = command[1]
@@ -103,7 +103,7 @@ def add_user(message):
 @bot.message_handler(commands=['admin_add'])
 def add_admin(message):
     new_admin_id = str(message.chat.id)
-    if new_admin_id in admin_id:
+    if new_admin_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 1:
             admin_to_add = command[1]
@@ -124,7 +124,7 @@ def add_admin(message):
 @bot.message_handler(commands=['remove'])
 def remove_user(message):
     user_id = str(message.chat.id)
-    if user_id in admin_id:
+    if user_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 1:
             user_to_remove = command[1]
@@ -146,7 +146,7 @@ def remove_user(message):
 @bot.message_handler(commands=['admin_remove'])
 def remove_admin(message):
     admin_id = str(message.chat.id)
-    if admin_id in admin_id:
+    if admin_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 1:
             admin_to_remove = command[1]
@@ -168,7 +168,7 @@ def remove_admin(message):
 @bot.message_handler(commands=['clearlogs'])
 def clear_logs_command(message):
     user_id = str(message.chat.id)
-    if user_id in admin_id:
+    if user_id in allowed_admin_ids:
         try:
             with open(LOG_FILE, "r+") as file:
                 log_content = file.read()
@@ -186,7 +186,7 @@ def clear_logs_command(message):
 @bot.message_handler(commands=['allusers'])
 def show_all_users(message):
     user_id = str(message.chat.id)
-    if user_id in admin_id:
+    if user_id in allowed_admin_ids:
         response = "Authorized Users:\n"
         for user_id in allowed_user_ids:
             try:
@@ -202,7 +202,7 @@ def show_all_users(message):
 @bot.message_handler(commands=['alladmins'])
 def show_all_admins(message):
     user_id = str(message.chat.id)
-    if user_id in admin_id:
+    if user_id in allowed_admin_ids:
         response = "Authorized Users:\n"
         for admin_id in allowed_user_ids:
             try:
@@ -218,7 +218,7 @@ def show_all_admins(message):
 @bot.message_handler(commands=['logs'])
 def show_recent_logs(message):
     user_id = str(message.chat.id)
-    if user_id in admin_id:
+    if user_id in allowed_admin_ids:
         if os.path.exists(LOG_FILE) and os.stat(LOG_FILE).st_size > 0:
             try:
                 with open(LOG_FILE, "rb") as file:
@@ -253,7 +253,7 @@ COOLDOWN_TIME =0
 def handle_bgmi(message):
     user_id = str(message.chat.id)
     if user_id in allowed_user_ids:
-        if user_id not in admin_id:
+        if user_id not in allowed_admin_ids:
             if user_id in bgmi_cooldown and (datetime.now() - bgmi_cooldown[user_id]).seconds < 3:
                 response = "You Are On Cooldown . Please Wait 5min Before Running The /bgmi Command Again."
                 bot.reply_to(message, response)
@@ -340,7 +340,7 @@ def welcome_admin(message):
 @bot.message_handler(commands=['broadcast'])
 def broadcast_message(message):
     user_id = str(message.chat.id)
-    if user_id in admin_id:
+    if user_id in allowed_admin_ids:
         command = message.text.split(maxsplit=1)
         if len(command) > 1:
             message_to_broadcast = "⚠️ Message To All Users By Admin:\n\n" + command[1]
