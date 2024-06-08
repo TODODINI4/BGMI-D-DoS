@@ -84,7 +84,7 @@ def add_user(message):
                 expiration_date = (datetime.now() + timedelta(days=days)).strftime('%Y-%m-%d')
                 user_entry = f"{user_to_add}, {expiration_date}"
                 if not any(user_to_add in user for user in allowed_user_ids):
-                    allowed_user_ids.append(user_entry)
+                    allowed_user_ids.append(user_to_add)
                     with open(USER_FILE, 'a') as file:
                         for user in allowed_user_ids:
                             file.write(f"{user_entry}\n")
