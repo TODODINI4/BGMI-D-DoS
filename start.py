@@ -84,10 +84,10 @@ def add_user(message):
                 expiration_date = (datetime.now() + timedelta(days=days)).strftime('%Y-%m-%d')
                 user_entry = f"{user_to_add}, {expiration_date}"
                 if not any(user_to_add in user for user in allowed_user_ids):
-                    allowed_user_ids.append(user_entry)
-                    with open(USER_FILE, 'w') as file:
+                    # allowed_user_ids.append(user_entry)
+                    with open(USER_FILE, 'a') as file:
                         for user in allowed_user_ids:
-                            file.write(f"{user}\n")
+                            file.write(f"{user_entry}\n")
                     response = f"User {user_to_add} Added Successfully with an expiration of {days} days 👍."
                 else:
                     response = "User already exists ."
@@ -187,7 +187,7 @@ def clear_logs_command(message):
 def show_all_users(message):
     user_id = str(message.chat.id)
     if user_id in allowed_admin_ids:
-        response = "Authorized Users:\n"
+        response = "Authorized Users :\n"
         for user_id in allowed_user_ids:
             try:
                 user_info = bot.get_chat(int(user_id))
@@ -203,7 +203,7 @@ def show_all_users(message):
 def show_all_admins(message):
     user_id = str(message.chat.id)
     if user_id in allowed_admin_ids:
-        response = "Authorized Users:\n"
+        response = "Authorized Admins :\n"
         for user_id in allowed_admin_ids:
             try:
                 admin_info = bot.get_chat(int(user_id))
