@@ -86,8 +86,7 @@ def add_user(message):
                 if user_to_add not in allowed_user_ids:
                     allowed_user_ids.append(user_to_add)
                     with open(USER_FILE, 'a') as file:
-                        for user in allowed_user_ids:
-                            file.write(f"{user_entry}\n")
+                        file.write(f"{user_entry}\n")
                     response = f"User {user_to_add} Added Successfully with an expiration of {days} days 👍."
                 else:
                     response = "User already exists ."
