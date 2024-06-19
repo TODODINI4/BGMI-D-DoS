@@ -95,7 +95,7 @@ def add_user(message):
         else:
             response = "Please specify a user ID to add 😒.\n✅ Usage: /add <userid> <days>"
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
 
     bot.reply_to(message, response)
 
@@ -116,7 +116,7 @@ def add_admin(message):
         else:
             response = "Please specify a Admin's user ID to add 😒.\n✅ Usage: /admin_add <userid>"
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
 
     bot.reply_to(message, response)
 
@@ -138,7 +138,7 @@ def remove_user(message):
         else:
             response = '''Please Specify A User ID to Remove. \n✅ Usage: /remove <userid>'''
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
 
     bot.reply_to(message, response)
 
@@ -160,7 +160,7 @@ def remove_admin(message):
         else:
             response = '''Please Specify A User ID to Remove. \n✅ Usage: /remove <userid>'''
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
 
     bot.reply_to(message, response)
 
@@ -179,7 +179,7 @@ def clear_logs_command(message):
         except FileNotFoundError:
             response = "Logs are already cleared ."
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['allusers'])
@@ -195,7 +195,7 @@ def show_all_users(message):
             except Exception as e:
                 response += f"- User ID: {user_id}\n"
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['alladmins'])
@@ -211,7 +211,7 @@ def show_all_admins(message):
             except Exception as e:
                 response += f"- User ID: {admin_id}\n"
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['logs'])
@@ -229,7 +229,7 @@ def show_recent_logs(message):
             response = "No data found "
             bot.reply_to(message, response)
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
         bot.reply_to(message, response)
 
 @bot.message_handler(commands=['id'])
@@ -272,7 +272,7 @@ def handle_bgmi(message):
                 start_attack_reply(message, target, port, time)  
                 full_command = f"./bgmi {target} {port} {time} 200"
                 subprocess.run(full_command, shell=True)
-                response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {time} Seconds\n\n👛Dm to Buy : @PANEL_EXPERT / @DARKESPYT_ROBOT"
+                response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {time} Seconds\n\n👛Dm to Buy : @HACKERRAJOFFICIAL"
         else:
             response = "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
     else:
@@ -301,7 +301,7 @@ def show_command_logs(message):
 
 @bot.message_handler(commands=['help'])
 def show_help(message):
-    help_text ='''😍Welcome to DARKESPYT BGMI D-DoS Bot\n\n🤖 Available commands:\n💥 /bgmi : Method For Bgmi Servers. \n💥 /rules : Please Check Before Use !!.\n💥 /mylogs : To Check Your Recents Attacks.\n💥 /plan : Checkout Our Botnet Rates.\n\n🤖 To See Admin Commands:\n💥 /admincmd : Shows All Admin Commands.\n\n'''
+    help_text ='''😍Welcome to ANSH PAID BGMI D-DoS Bot\n\n🤖 Available commands:\n💥 /bgmi : Method For Bgmi Servers. \n💥 /rules : Please Check Before Use !!.\n💥 /mylogs : To Check Your Recents Attacks.\n💥 /plan : Checkout Our Botnet Rates.\n\n🤖 To See Admin Commands:\n💥 /admincmd : Shows All Admin Commands.\n\n'''
     for handler in bot.message_handlers:
         if hasattr(handler, 'commands'):
             if message.text.startswith('/help'):
@@ -315,19 +315,19 @@ def show_help(message):
 @bot.message_handler(commands=['start'])
 def welcome_start(message):
     user_name = message.from_user.first_name
-    response = f'''👋🏻Welcome to our DARKESPYT, BGMI D-DoS BOT, {user_name}!\nFeel Free to Explore the bot.\n🤖Try To Run This Command : /help \n'''
+    response = f'''👋🏻Welcome to our ANSH PAID BGMI D-DoS BOT, {user_name}!\nFeel Free to Explore the bot.\n🤖Try To Run This Command : /help \n'''
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['rules'])
 def welcome_rules(message):
     user_name = message.from_user.first_name
-    response = f'''Please Follow These Rules ❗:\n\n1. We are not responsible for any D-DoS attacks, send by our bot. This bot is only for educational purpose and it's source code freely available in github.!!\n2. D-DoS Attacks will expose your IP Address to the Attacking server. so do it with your own risk. \n3. The power of D-DoS is enough to down any game's server. So kindly don't use it to down a website server..!!\n\nFor more : @DARKESPYT | @PANEL_EXPERT'''
+    response = f'''Please Follow These Rules ❗:\n\n1. We are not responsible for any D-DoS attacks, send by our bot. This bot is only for educational purpose and it's source code freely available in github.!!\n2. D-DoS Attacks will expose your IP Address to the Attacking server. so do it with your own risk. \n3. The power of D-DoS is enough to down any game's server. So kindly don't use it to down a website server..!!\n\nFor more : @HACKERRAJOFFICIAL'''
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['plan'])
 def welcome_plan(message):
     user_name = message.from_user.first_name
-    response = f'''Offer :\n1) 3 Days - ₹120/Acc,\n2) 7 Days - ₹500/Acc,\n3) 15 Days - ₹1000/Acc,\n4) 30 Days - ₹1800/Acc,\n5) 60 Days (Full Season) - ₹3500/Acc\n\n{user_name} can Claim this offer,\nDm to make purchase @PANEL_EXPERT / @DARKESPYT_ROBOT\n\n\nNote : All Currencies Accepted via Binance.'''
+    response = f'''Offer :\n1) 3 Days - ₹120/Acc,\n2) 7 Days - ₹500/Acc,\n3) 15 Days - ₹1000/Acc,\n4) 30 Days - ₹1800/Acc,\n5) 60 Days (Full Season) - ₹3500/Acc\n\n{user_name} can Claim this offer,\nDm to make purchase @HACKERRAJOFFICIAL\n\n\nNote : All Currencies Accepted via Binance.'''
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['admincmd'])
@@ -354,7 +354,7 @@ def broadcast_message(message):
         else:
             response = "🤖 Please Provide A Message To Broadcast."
     else:
-        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
+        response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @HACKERRAJOFFICIAL."
 
     bot.reply_to(message, response)
 
