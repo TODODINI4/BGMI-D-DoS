@@ -1,0 +1,12 @@
+UserID: 1027596128 | Time: 2024-06-16 21:21:59.198752 | Command: /bgmi | Target: 127.0.0.1 | Port: 8080 | Time: 60
+Username: @USIR_DIED_REAL
+Target: 127.0.0.1
+Port: 8080
+Time: 60
+
+UserID: 1027596128 | Time: 2024-06-17 07:29:45.549221 | Command: /bgmi | Target: 127.0.0.1 | Port: 8080 | Time: 60
+Username: @USIR_DIED_REAL
+Target: 127.0.0.1
+Port: 8080
+Time: 60
+

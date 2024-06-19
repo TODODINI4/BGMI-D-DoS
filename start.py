@@ -6,7 +6,7 @@ import os
 from keep_alive import keep_alive
 
 keep_alive()
-bot = telebot.TeleBot('7345507165:AAHrfsA03J-ewPL3TCrdK3TOasJpiUZcybA')
+bot = telebot.TeleBot('7345507165:AAErAcMHA6iT02v6QedQQC-fDcWEXkjKxYw')
 USER_FILE = "users.txt"
 ADMIN_FILE = "admins.txt"
 LOG_FILE = "log.txt"
@@ -356,6 +356,12 @@ def broadcast_message(message):
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
 
+    bot.reply_to(message, response)
+
+@bot.message_handler(commands=['id'])
+def show_user_id(message):
+    user_id = str(message.chat.id)
+    response = f"🤖Your ID: {user_id}"
     bot.reply_to(message, response)
 
 #bot.polling()
