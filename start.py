@@ -317,6 +317,14 @@ def welcome_start(message):
     user_name = message.from_user.first_name
     response = f'''👋🏻Welcome to our DARKESPYT, BGMI D-DoS BOT, {user_name}!\nFeel Free to Explore the bot.\n🤖Try To Run This Command : /help \n'''
     bot.reply_to(message, response)
+    
+@bot.message_handler(commands=['ping'])
+def check_ping(message):
+    start_time = time.time()
+    bot.reply_to(message, "Pong!")
+    end_time = time.time()
+    ping = (end_time - start_time) * 1000
+    bot.send_message(message.chat.id, f"Bot Ping : {ping:.2f} ms")
 
 @bot.message_handler(commands=['rules'])
 def welcome_rules(message):
