@@ -1,12 +1,96 @@
-UserID: 1027596128 | Time: 2024-06-16 21:21:59.198752 | Command: /bgmi | Target: 127.0.0.1 | Port: 8080 | Time: 60
-Username: @USIR_DIED_REAL
-Target: 127.0.0.1
-Port: 8080
-Time: 60
+UserID: 1877723767 | Time: 2024-06-20 16:22:33.900527 | Command: /bgmi | Target: 20.235.53.58 | Port: 29245 | Time: 220
+Username: @ANDROIDMODSTAMIL
+Target: 20.235.53.58
+Port: 29245
+Time: 220
 
-UserID: 1027596128 | Time: 2024-06-17 07:29:45.549221 | Command: /bgmi | Target: 127.0.0.1 | Port: 8080 | Time: 60
-Username: @USIR_DIED_REAL
-Target: 127.0.0.1
-Port: 8080
-Time: 60
+UserID: 1877723767 | Time: 2024-06-20 16:24:57.631025 | Command: /bgmi | Target: 20.235.53.58 | Port: 29245 | Time: 120
+Username: @ANDROIDMODSTAMIL
+Target: 20.235.53.58
+Port: 29245
+Time: 120
+
+UserID: 6901121219 | Time: 2024-06-20 16:45:42.055498 | Command: /bgmi | Target: 52.140.45.137 | Port: 26396 | Time: 180
+Username: @karanios
+Target: 52.140.45.137
+Port: 26396
+Time: 180
+
+UserID: 1877723767 | Time: 2024-06-20 16:50:12.840226 | Command: /bgmi | Target: 20.235.48.223 | Port: 13806 | Time: 220
+Username: @ANDROIDMODSTAMIL
+Target: 20.235.48.223
+Port: 13806
+Time: 220
+
+UserID: 383167272 | Time: 2024-06-20 17:08:20.755256 | Command: /bgmi | Target: 20.235.51.188 | Port: 29534 | Time: 180
+Username: @GhostRevan
+Target: 20.235.51.188
+Port: 29534
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-20 17:08:43.212219 | Command: /bgmi | Target: 20.235.51.188 | Port: 29534 | Time: 180
+Username: @GhostRevan
+Target: 20.235.51.188
+Port: 29534
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-20 17:14:58.687523 | Command: /bgmi | Target: 20.235.51.188 | Port: 29534 | Time: 180
+Username: @GhostRevan
+Target: 20.235.51.188
+Port: 29534
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-20 17:15:03.645817 | Command: /bgmi | Target: 20.235.51.188 | Port: 29534 | Time: 180
+Username: @GhostRevan
+Target: 20.235.51.188
+Port: 29534
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-20 17:18:00.612362 | Command: /bgmi | Target: 20.235.51.188 | Port: 29534 | Time: 180
+Username: @GhostRevan
+Target: 20.235.51.188
+Port: 29534
+Time: 180
+
+UserID: 6901121219 | Time: 2024-06-20 17:18:59.909205 | Command: /bgmi | Target: 52.140.2.172 | Port: 20107 | Time: 180
+Username: @karanios
+Target: 52.140.2.172
+Port: 20107
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-20 17:21:04.996044 | Command: /bgmi | Target: 20.235.51.188 | Port: 29534 | Time: 180
+Username: @GhostRevan
+Target: 20.235.51.188
+Port: 29534
+Time: 180
+
+UserID: 6901121219 | Time: 2024-06-20 17:26:33.680738 | Command: /bgmi | Target: 52.140.43.20 | Port: 15527 | Time: 180
+Username: @karanios
+Target: 52.140.43.20
+Port: 15527
+Time: 180
+
+UserID: 6901121219 | Time: 2024-06-20 17:29:58.703823 | Command: /bgmi | Target: 40.80.87.184 | Port: 20001 | Time: 180
+Username: @karanios
+Target: 40.80.87.184
+Port: 20001
+Time: 180
+
+UserID: 6901121219 | Time: 2024-06-20 17:30:37.996229 | Command: /bgmi | Target: 4.213.65.190 | Port: 17693 | Time: 180
+Username: @karanios
+Target: 4.213.65.190
+Port: 17693
+Time: 180
+
+UserID: 6901121219 | Time: 2024-06-20 17:42:58.590243 | Command: /bgmi | Target: 20.235.48.149 | Port: 16252 | Time: 180
+Username: @karanios
+Target: 20.235.48.149
+Port: 16252
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-20 17:48:00.125400 | Command: /bgmi | Target: 4.247.16.133 | Port: 14410 | Time: 180
+Username: @GhostRevan
+Target: 4.247.16.133
+Port: 14410
+Time: 180
 
