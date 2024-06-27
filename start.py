@@ -28,15 +28,24 @@ def read_users():
         pass
     return user_ids
 
+def get_expiration(user_id):
+    now = datetime.now().date()
+    allowed_user_ids = read_users()
+    for user in allowed_user_ids:
+        parts = user.split(', ')
+        if len(parts) == 2:
+            user_id, expiration_date_str = parts
+        expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d').date()
+        if expiration_date >= now:
+            return expiration_date
+    return None
+
 def read_admins():
     try:
         with open(ADMIN_FILE, "r") as file:
             return file.read().splitlines()
     except FileNotFoundError:
         return []
-
-allowed_user_ids = read_users()
-allowed_admin_ids = read_admins()
 
 def log_command(user_id, target, port, time):
     user_info = bot.get_chat(user_id)
@@ -75,6 +84,7 @@ def record_command_logs(user_id, command, target=None, port=None, time=None):
 @bot.message_handler(commands=['add'])
 def add_user(message):
     user_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if user_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 2:
@@ -83,6 +93,7 @@ def add_user(message):
                 days = int(command[2])
                 expiration_date = (datetime.now() + timedelta(days=days)).strftime('%Y-%m-%d')
                 user_entry = f"{user_to_add}, {expiration_date}"
+                allowed_user_ids = read_users()
                 if user_to_add not in allowed_user_ids:
                     allowed_user_ids.append(user_to_add)
                     with open(USER_FILE, 'a') as file:
@@ -96,12 +107,12 @@ def add_user(message):
             response = "Please specify a user ID to add 😒.\n✅ Usage: /add <userid> <days>"
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
-
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['admin_add'])
 def add_admin(message):
     new_admin_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if new_admin_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 1:
@@ -117,16 +128,17 @@ def add_admin(message):
             response = "Please specify a Admin's user ID to add 😒.\n✅ Usage: /admin_add <userid>"
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
-
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['remove'])
 def remove_user(message):
     user_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if user_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 1:
             user_to_remove = command[1]
+            allowed_user_ids = read_users()
             if user_to_remove in allowed_user_ids:
                 allowed_user_ids.remove(user_to_remove)
                 with open(USER_FILE, "w") as file:
@@ -139,12 +151,12 @@ def remove_user(message):
             response = '''Please Specify A User ID to Remove. \n✅ Usage: /remove <userid>'''
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
-
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['admin_remove'])
 def remove_admin(message):
     admin_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if admin_id in allowed_admin_ids:
         command = message.text.split()
         if len(command) > 1:
@@ -161,12 +173,12 @@ def remove_admin(message):
             response = '''Please Specify A User ID to Remove. \n✅ Usage: /remove <userid>'''
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
-
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['clearlogs'])
 def clear_logs_command(message):
     user_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if user_id in allowed_admin_ids:
         try:
             with open(LOG_FILE, "r+") as file:
@@ -185,13 +197,18 @@ def clear_logs_command(message):
 @bot.message_handler(commands=['allusers'])
 def show_all_users(message):
     user_id = str(message.chat.id)
+    allowed_user_ids = read_users()
+    allowed_admin_ids = read_admins()
     if user_id in allowed_admin_ids:
         response = "Authorized Users :\n"
         for user_id in allowed_user_ids:
+            expiration_date = get_expiration(user_id)
             try:
                 user_info = bot.get_chat(int(user_id))
                 username = user_info.username
-                response += f"- @{username} (ID: {user_id})\n"
+                response += f"- @{username} (ID: {user_id}) Expires on: {expiration_date}\n"
+                # else:
+                    # response += f"- @{username} (ID: {user_id})\n"
             except Exception as e:
                 response += f"- User ID: {user_id}\n"
     else:
@@ -201,6 +218,7 @@ def show_all_users(message):
 @bot.message_handler(commands=['alladmins'])
 def show_all_admins(message):
     user_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if user_id in allowed_admin_ids:
         response = "Authorized Admins :\n"
         for user_id in allowed_admin_ids:
@@ -209,7 +227,7 @@ def show_all_admins(message):
                 username = admin_info.username
                 response += f"- @{username} (ID: {user_id})\n"
             except Exception as e:
-                response += f"- User ID: {admin_id}\n"
+                response += f"- User ID: {user_id}\n"
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
     bot.reply_to(message, response)
@@ -217,6 +235,7 @@ def show_all_admins(message):
 @bot.message_handler(commands=['logs'])
 def show_recent_logs(message):
     user_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if user_id in allowed_admin_ids:
         if os.path.exists(LOG_FILE) and os.stat(LOG_FILE).st_size > 0:
             try:
@@ -230,7 +249,7 @@ def show_recent_logs(message):
             bot.reply_to(message, response)
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
-        bot.reply_to(message, response)
+    bot.reply_to(message, response)
 
 @bot.message_handler(commands=['id'])
 def show_user_id(message):
@@ -245,27 +264,27 @@ def start_attack_reply(message, target, port, time):
     bot.reply_to(message, response)
 
 bgmi_cooldown = {}
-
 COOLDOWN_TIME =0
 
 @bot.message_handler(commands=['bgmi'])
 def handle_bgmi(message):
     user_id = str(message.chat.id)
+    allowed_user_ids = read_users()
+    allowed_admin_ids = read_admins()
     if user_id in allowed_user_ids:
         if user_id not in allowed_admin_ids:
             if user_id in bgmi_cooldown and (datetime.now() - bgmi_cooldown[user_id]).seconds < 3:
-                response = "You Are On Cooldown . Please Wait 5min Before Running The /bgmi Command Again."
+                response = "You Are On Cooldown . Please Wait 3 seconds Before Running The /bgmi Command Again."
                 bot.reply_to(message, response)
                 return
             bgmi_cooldown[user_id] = datetime.now()
-        
         command = message.text.split()
         if len(command) == 4:
             target = command[1]
             port = int(command[2])
             time = int(command[3])
-            if time > 241:
-                response = "Error: Time interval must be less than 180."
+            if user_id not in allowed_admin_ids and time > 300:
+                response = "Error: Time interval must be less than 300."
             else:
                 record_command_logs(user_id, '/bgmi', target, port, time)
                 log_command(user_id, target, port, time)
@@ -277,12 +296,12 @@ def handle_bgmi(message):
             response = "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
     else:
         response = " You Are Not Authorized To Use This Command ."
-
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['mylogs'])
 def show_command_logs(message):
     user_id = str(message.chat.id)
+    allowed_user_ids = read_users()
     if user_id in allowed_user_ids:
         try:
             with open(LOG_FILE, "r") as file:
@@ -296,7 +315,6 @@ def show_command_logs(message):
             response = "No command logs found."
     else:
         response = "You Are Not Authorized To Use This Command ."
-
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['help'])
@@ -335,7 +353,7 @@ def welcome_rules(message):
 @bot.message_handler(commands=['plan'])
 def welcome_plan(message):
     user_name = message.from_user.first_name
-    response = f'''Offer :\n1) 3 Days - ₹120/Acc,\n2) 7 Days - ₹500/Acc,\n3) 15 Days - ₹1000/Acc,\n4) 30 Days - ₹1800/Acc,\n5) 60 Days (Full Season) - ₹3500/Acc\n\n{user_name} can Claim this offer,\nDm to make purchase @PANEL_EXPERT / @DARKESPYT_ROBOT\n\n\nNote : All Currencies Accepted via Binance.'''
+    response = f'''Offer :\n1) 3 Days - ₹120/Acc,\n2) 7 Days - ₹250/Acc,\n3) 15 Days - ₹500/Acc,\n4) 30 Days - ₹1000/Acc,\n5) 60 Days (Full Season) - ₹2000/Acc\n\nDm to make purchase @PANEL_EXPERT / @DARKESPYT_ROBOT\n\n\nNote : All Currencies Accepted via Binance.'''
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['admincmd'])
@@ -347,6 +365,7 @@ def welcome_admin(message):
 @bot.message_handler(commands=['broadcast'])
 def broadcast_message(message):
     user_id = str(message.chat.id)
+    allowed_admin_ids = read_admins()
     if user_id in allowed_admin_ids:
         command = message.text.split(maxsplit=1)
         if len(command) > 1:
@@ -363,7 +382,6 @@ def broadcast_message(message):
             response = "🤖 Please Provide A Message To Broadcast."
     else:
         response = "Purchase Admin Permission to use this command.\n\nTo Purchase Admin Permission, Contact @PANEL_EXPERT / @DARKESPYT_ROBOT."
-
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['id'])
@@ -372,18 +390,24 @@ def show_user_id(message):
     response = f"🤖Your ID: {user_id}"
     bot.reply_to(message, response)
 
-#bot.polling()
+def update_users_file():
+    now = datetime.now().date()
+    allowed_user_ids = read_users()
+    filtered_user_ids = [
+        user for user in allowed_user_ids
+        if ',' not in user  # For user IDs without expiration date (e.g., "1068178978")
+        or datetime.strptime(user.split(',')[1].strip(), '%Y-%m-%d').date() >= now
+    ]
+    temp_file = USER_FILE + ".tmp"
+    with open(temp_file, 'w') as file:
+        for user_id in filtered_user_ids:
+            file.write(f"{user_id}\n")
+    import os
+    os.replace(temp_file, USER_FILE)
+
 while True:
     try:
         bot.polling(none_stop=True)
     except Exception as e:
         print(e)
-while True:
-    now = datetime.now()
-    allowed_user_ids = [
-        user for user in allowed_user_ids
-        if datetime.strptime(user.split(',')[1], '%Y-%m-%d') >= now
-    ]
-    with open(USER_FILE, 'w') as file:
-        for user in allowed_user_ids:
-            file.write(f"{user}\n")
+    update_users_file()

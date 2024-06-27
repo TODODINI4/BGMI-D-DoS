@@ -107,3 +107,282 @@ Target: 20.204.55.7
 Port: 20001
 Time: 180
 
+UserID: 1068178978 | Time: 2024-06-24 13:17:53.764127 | Command: /bgmi | Target: 20.235.51.208 | Port: 25079 | Time: 180
+Username: @MR_BLACKEY
+Target: 20.235.51.208
+Port: 25079
+Time: 180
+
+UserID: 1027596128 | Time: 2024-06-24 13:18:53.923810 | Command: /bgmi | Target: 52.140.43.20 | Port: 15859 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 52.140.43.20
+Port: 15859
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-24 13:23:37.080326 | Command: /bgmi | Target: 52.140.43.20 | Port: 15859 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 52.140.43.20
+Port: 15859
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-24 13:27:03.878238 | Command: /bgmi | Target: 52.140.43.20 | Port: 15859 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 52.140.43.20
+Port: 15859
+Time: 240
+
+UserID: 1068178978 | Time: 2024-06-24 13:37:54.586921 | Command: /bgmi | Target: 20.235.20.95 | Port: 22592 | Time: 180
+Username: @MR_BLACKEY
+Target: 20.235.20.95
+Port: 22592
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-24 17:36:38.689931 | Command: /bgmi | Target: 52.140.43.157 | Port: 26692 | Time: 180
+Username: @GhostRevan
+Target: 52.140.43.157
+Port: 26692
+Time: 180
+
+UserID: 383167272 | Time: 2024-06-24 17:37:07.578155 | Command: /bgmi | Target: 52.140.43.157 | Port: 26692 | Time: 180
+Username: @GhostRevan
+Target: 52.140.43.157
+Port: 26692
+Time: 180
+
+UserID: 1822845513 | Time: 2024-06-24 17:52:42.453766 | Command: /bgmi | Target: 20.204.176.246 | Port: 25304 | Time: 180
+Username: @IamAyanYT
+Target: 20.204.176.246
+Port: 25304
+Time: 180
+
+UserID: 1822845513 | Time: 2024-06-25 08:19:11.456233 | Command: /bgmi | Target: 20.235.51.134 | Port: 14232 | Time: 180
+Username: @IamAyanYT
+Target: 20.235.51.134
+Port: 14232
+Time: 180
+
+UserID: 1822845513 | Time: 2024-06-25 08:28:08.954508 | Command: /bgmi | Target: 20.219.166.58 | Port: 18845 | Time: 240
+Username: @IamAyanYT
+Target: 20.219.166.58
+Port: 18845
+Time: 240
+
+UserID: 1822845513 | Time: 2024-06-25 08:34:14.432455 | Command: /bgmi | Target: 20.198.111.205 | Port: 19827 | Time: 240
+Username: @IamAyanYT
+Target: 20.198.111.205
+Port: 19827
+Time: 240
+
+UserID: 1822845513 | Time: 2024-06-25 08:40:20.320454 | Command: /bgmi | Target: 20.198.73.136 | Port: 25461 | Time: 240
+Username: @IamAyanYT
+Target: 20.198.73.136
+Port: 25461
+Time: 240
+
+UserID: 1822845513 | Time: 2024-06-25 09:25:25.465446 | Command: /bgmi | Target: 4.247.17.228 | Port: 10532 | Time: 180
+Username: @IamAyanYT
+Target: 4.247.17.228
+Port: 10532
+Time: 180
+
+UserID: 1822845513 | Time: 2024-06-25 09:29:39.547121 | Command: /bgmi | Target: 20.198.110.239 | Port: 11424 | Time: 180
+Username: @IamAyanYT
+Target: 20.198.110.239
+Port: 11424
+Time: 180
+
+UserID: 1952587369 | Time: 2024-06-25 12:39:13.698960 | Command: /bgmi | Target: 13.76.102.115 | Port: 17500 | Time: 180
+Username: @VigneshSankaran
+Target: 13.76.102.115
+Port: 17500
+Time: 180
+
+UserID: 1952587369 | Time: 2024-06-25 12:42:03.371208 | Command: /bgmi | Target: 40.80.87.146 | Port: 20000 | Time: 180
+Username: @VigneshSankaran
+Target: 40.80.87.146
+Port: 20000
+Time: 180
+
+UserID: 1952587369 | Time: 2024-06-25 12:48:16.407331 | Command: /bgmi | Target: 4.247.17.165 | Port: 15103 | Time: 180
+Username: @VigneshSankaran
+Target: 4.247.17.165
+Port: 15103
+Time: 180
+
+UserID: 1952587369 | Time: 2024-06-25 13:11:07.519949 | Command: /bgmi | Target: 20.204.181.170 | Port: 13124 | Time: 180
+Username: @VigneshSankaran
+Target: 20.204.181.170
+Port: 13124
+Time: 180
+
+UserID: 1157789561 | Time: 2024-06-25 17:26:58.012570 | Command: /bgmi | Target: 20.235.51.142 | Port: 23139 | Time: 240
+Username: @REVANADMIN
+Target: 20.235.51.142
+Port: 23139
+Time: 240
+
+UserID: 1157789561 | Time: 2024-06-25 17:27:09.501329 | Command: /bgmi | Target: 20.235.51.142 | Port: 23139 | Time: 240
+Username: @REVANADMIN
+Target: 20.235.51.142
+Port: 23139
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 09:10:31.891999 | Command: /bgmi | Target: 5.75.141.115 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 5.75.141.115
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 09:12:43.078181 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+UserID: 1027596128 | Time: 2024-06-26 09:18:23.327139 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 09:22:31.471348 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 09:29:41.826315 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 09:34:33.035955 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 09:40:24.582177 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 09:44:50.068909 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:07:22.736778 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:11:56.400359 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:20:39.146541 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:24:49.300849 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:28:57.029043 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:33:09.576464 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:38:13.441146 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 10:45:51.159940 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1822845513 | Time: 2024-06-26 10:45:51.793889 | Command: /bgmi | Target: 4.213.64.184 | Port: 23080 | Time: 180
+UserID: 1822845513 | Time: 2024-06-26 10:51:36.776870 | Command: /bgmi | Target: 1.1.1.1 | Port: 11 | Time: 11
+Username: @IamAyanYT
+Target: 1.1.1.1
+Port: 11
+Time: 11
+
+UserID: 1027596128 | Time: 2024-06-26 10:52:28.866237 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 240
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 240
+
+UserID: 1822845513 | Time: 2024-06-26 10:52:59.675321 | Command: /bgmi | Target: 20.204.16.218 | Port: 24137 | Time: 180
+Username: @IamAyanYT
+Target: 20.204.16.218
+Port: 24137
+Time: 180
+
+UserID: 1822845513 | Time: 2024-06-26 11:04:55.001639 | Command: /bgmi | Target: 20.198.104.230 | Port: 25019 | Time: 180
+UserID: 1822845513 | Time: 2024-06-26 11:08:12.293216 | Command: /bgmi | Target: 20.198.104.230 | Port: 25019 | Time: 180
+Username: @IamAyanYT
+Target: 20.198.104.230
+Port: 25019
+Time: 180
+
+UserID: 1822845513 | Time: 2024-06-26 11:18:22.600165 | Command: /bgmi | Target: 20.204.191.16 | Port: 10500 | Time: 180
+Username: @IamAyanYT
+Target: 20.204.191.16
+Port: 10500
+Time: 180
+
+UserID: 1822845513 | Time: 2024-06-26 11:24:19.955251 | Command: /bgmi | Target: 20.198.106.143 | Port: 10780 | Time: 240
+Username: @IamAyanYT
+Target: 20.198.106.143
+Port: 10780
+Time: 240
+
+UserID: 1027596128 | Time: 2024-06-26 14:58:42.622853 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 241
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 241
+
+UserID: 1027596128 | Time: 2024-06-26 15:12:08.475787 | Command: /bgmi | Target: 65.108.74.236 | Port: 2083 | Time: 600
+Username: @USIR_DIED_REAL
+Target: 65.108.74.236
+Port: 2083
+Time: 600
+
+UserID: 1822845513 | Time: 2024-06-26 15:36:27.338745 | Command: /bgmi | Target: 20.219.77.204 | Port: 22000 | Time: 240
+Username: @IamAyanYT
+Target: 20.219.77.204
+Port: 22000
+Time: 240
+
+UserID: 1822845513 | Time: 2024-06-26 15:44:34.801380 | Command: /bgmi | Target: 20.235.13.245 | Port: 15589 | Time: 240
+Username: @IamAyanYT
+Target: 20.235.13.245
+Port: 15589
+Time: 240
+
+UserID: 1822845513 | Time: 2024-06-26 16:11:02.725906 | Command: /bgmi | Target: 20.219.164.35 | Port: 21882 | Time: 240
+Username: @IamAyanYT
+Target: 20.219.164.35
+Port: 21882
+Time: 240
+
