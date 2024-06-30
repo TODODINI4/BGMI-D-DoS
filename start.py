@@ -429,7 +429,7 @@ def initialize_bot(bot, bot_id):
     def check_ping(message):
         start_time = time.time()
         bot.reply_to(message, "Pong!")
-        ping = (time.time() - start_time) * 1000 / 4
+        ping = (time.time() - start_time) * 1000 / 5
         bot.send_message(message.chat.id, f"Bot Ping : {ping:.2f} ms")
     
     @bot.message_handler(commands=['rules'])
