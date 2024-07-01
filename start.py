@@ -139,10 +139,7 @@ def initialize_bot(bot, bot_id):
         cursor = conn.cursor()
         user_info = bot.get_chat(user_id)
         username = f"@{user_info.username}" if user_info.username else f"UserID: {user_id}"
-        cursor.execute('''
-            INSERT INTO logs (user_id, username, target, port, time, command, timestamp)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (user_id, username, target, port, time, command, datetime.now()))
+        cursor.execute('''INSERT INTO logs (user_id, username, target, port, time, command, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)''', (user_id, username, target, port, time, command, datetime.now(),))
         conn.commit()
         conn.close()
     
