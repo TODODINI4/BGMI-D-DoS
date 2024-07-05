@@ -458,13 +458,12 @@ def initialize_bot(bot, bot_id):
             command = message.text.split(maxsplit=1)
             if len(command) > 1:
                 message_to_broadcast = "⚠️ Message To All Users By Admin:\n\n" + command[1]
-                with open(USER_FILE, "r") as file:
-                    user_ids = file.read().splitlines()
-                    for user_id in user_ids:
-                        try:
-                            bot.send_message(user_id, message_to_broadcast)
-                        except Exception as e:
-                            print(f"Failed to send broadcast message to user {user_id}: {str(e)}")
+                allowed_user_ids, expirations = read_users(bot_id)
+                for user_id in allowed_user_ids:
+                    try:
+                        bot.send_message(user_id, message_to_broadcast)
+                    except Exception as e:
+                        print(f"Failed to send broadcast message to user {user_id}: {str(e)}")
                 response = "Broadcast Message Sent Successfully To All Users 👍."
             else:
                 response = "🤖 Please Provide A Message To Broadcast."
