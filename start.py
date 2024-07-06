@@ -7,6 +7,7 @@ import sqlite3
 from keep_alive import keep_alive
 from db import initialize_db
 from threading import Thread
+import tempfile
 
 DB_FILE = 'bot_data.db'
 keep_alive()
@@ -323,6 +324,12 @@ def initialize_bot(bot, bot_id):
                 response = "Recent Logs:\n"
                 for log in logs:
                     response += f"{log}\n"
+    
+                with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                    temp_file.write(response.encode('utf-8'))
+    
+                bot.send_document(message.chat.id, open(temp_file.name, 'rb'), caption="Recent Logs")
+                os.remove(temp_file.name)
             else:
                 response = "No data found"
         else:
@@ -344,11 +351,18 @@ def initialize_bot(bot, bot_id):
                 response = "Your Command Logs:\n"
                 for log in logs:
                     response += f"{log}\n"
+    
+                with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                    temp_file.write(response.encode('utf-8'))
+    
+                bot.send_document(message.chat.id, open(temp_file.name, 'rb'), caption="Your Command Logs")
+                os.remove(temp_file.name)
             else:
                 response = "No Command Logs Found For You."
         else:
             response = f"You Are Not Authorized To Use This Command.\n\nKindly Contact Admin to purchase the Access : {owner_name}."
         bot.reply_to(message, response)
+
     
     @bot.message_handler(commands=['id'])
     def show_user_id(message):
