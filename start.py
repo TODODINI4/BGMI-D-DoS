@@ -482,7 +482,7 @@ def initialize_bot(bot, bot_id):
 def start_bot(bot, bot_id):
     initialize_bot(bot, bot_id)
     print(f"\n{bot_id}) Starting bot with token {bot.token}...")
-    bot.polling(none_stop=True, interval=0, timeout=0)
+    bot.infinite_polling() #bot.polling(none_stop=True, interval=0, timeout=0) --for normal polling
 
 threads = []
 bot_tokens = fetch_bot_tokens()
