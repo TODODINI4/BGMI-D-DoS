@@ -48,7 +48,8 @@ def initialize_db():
     # Create admins table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS admins (
-            admin_id TEXT PRIMARY KEY,
+            id INTEGER PRIMARY KEY,
+            admin_id TEXT,
             bot_id INTEGER,
             FOREIGN KEY (bot_id) REFERENCES bot_configs(id)
         )
