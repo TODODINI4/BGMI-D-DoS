@@ -168,12 +168,15 @@ def initialize_bot(bot, bot_id):
     def add_admin_command(message):
         user_id = str(message.chat.id)
         allowed_admin_ids = read_admins(bot_id)
-        if user_id in allowed_admin_ids:
+        if user_id in allow2ed_admin_ids:
             command = message.text.split()
             if len(command) > 1:
                 admin_to_add = command[1]
-                add_admin(admin_to_add, bot_id)
-                response = f"Admin {admin_to_add} Added Successfully 👍."
+                if admin_to_add not in allowed_admin_ids:
+                    add_admin(admin_to_add, bot_id)
+                    response = f"Admin {admin_to_add} Added Successfully 👍."
+                else:
+                    response = f"Admin {admin_to_add} already exists👍."
             else:
                 response = "Please specify an Admin's user ID to add 😒.\n✅ Usage: /admin_add <userid>"
         else:
