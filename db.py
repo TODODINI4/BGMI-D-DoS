@@ -1,15 +1,15 @@
 import sqlite3
 
 default_admins = [
-    ('1027596128', '1'),
-    ('1027596128', '2'),
-    ('1027596128', '3'),
-    ('1027596128', '4'),
-    ('1027596128', '5'),
-    ('6141252240', '2'),
-    ('1068178978', '3'),
-    ('5082235604', '4'),
-    ('1157789561', '5')
+    (1, '1027596128', 1),
+    (2, '1027596128', 2),
+    (3, '1027596128', 3),
+    (4, '1027596128', 4),
+    (5, '1027596128', 5),
+    (6, '6141252240', 2),
+    (7, '1068178978', 3),
+    (8, '5082235604', 4),
+    (9, '1157789561', 5)
 ]
 token = '7345507165:AAGc5EofxRG406P4fjKrzMhvhD0aY-kvJ8w'
 bot_name = 'BGMI D-DoS BOT'
@@ -60,11 +60,11 @@ def initialize_db():
     ''')
     
     # Insert default admin if not exists
-    for admin_id, bot_id in default_admins:
+    for id,admin_id, bot_id in default_admins:
         cursor.execute('''
-            INSERT OR IGNORE INTO admins (admin_id, bot_id)
-            VALUES (?, ?)
-        ''', (admin_id, bot_id))
+            INSERT OR IGNORE INTO admins (id, admin_id, bot_id)
+            VALUES (?, ?, ?)
+        ''', (id, admin_id, bot_id))
 
     # Create logs table
     cursor.execute('''
