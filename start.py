@@ -13,8 +13,17 @@ DB_FILE = 'bot_data.db'
 keep_alive()
 initialize_db()
 
+def adapt_datetime(dt):
+    return dt.isoformat()
+
+def convert_datetime(s):
+    return datetime.fromisoformat(s)
+
+sqlite3.register_adapter(datetime, adapt_datetime)
+sqlite3.register_converter("datetime", convert_datetime)
+
 def db_connection():
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, detect_types=sqlite3.PARSE_DECLTYPES)
     return conn
 
 def read_users(bot_id):
@@ -443,7 +452,7 @@ def initialize_bot(bot, bot_id):
     def check_ping(message):
         start_time = time.time()
         bot.reply_to(message, "Pong!")
-        ping = (time.time() - start_time) * 1000 / 5
+        ping = (time.time() - start_time) * 1000 / 15
         bot.send_message(message.chat.id, f"Bot Ping : {ping:.2f} ms")
     
     @bot.message_handler(commands=['rules'])
