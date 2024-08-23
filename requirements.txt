@@ -1,12 +1,3 @@
-cfscrape
-cloudscraper
-certifi
-dnspython
-requests
-impacket
-psutil
-icmplib
-git+https://github.com/MHProDev/PyRoxy.git
-yarl
 telebot
 flask
+schedule
