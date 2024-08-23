@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from threading import Thread
 import os
 import time
-import shedule
+import schedule
 
 app = Flask(__name__)
 @app.route('/')
