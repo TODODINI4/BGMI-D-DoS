@@ -1,0 +1,23 @@
+from flask import Flask, render_template
+from threading import Thread
+import os
+import time
+<<<<<<< HEAD
+import shedule
+=======
+>>>>>>> db40001ccbc8593e1c3aa0cf340a8023b5c33c3b
+
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return "Alive"
+
+def run():
+    app.run(host='0.0.0.0',port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+    os.system("echo 'Keep-alive script running...'")
+
+schedule.every(1500).seconds.do(keep_alive)
