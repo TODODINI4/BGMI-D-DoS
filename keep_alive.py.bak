@@ -2,7 +2,10 @@ from flask import Flask, render_template
 from threading import Thread
 import os
 import time
+<<<<<<< HEAD
 import shedule
+=======
+>>>>>>> db40001ccbc8593e1c3aa0cf340a8023b5c33c3b
 
 app = Flask(__name__)
 @app.route('/')
