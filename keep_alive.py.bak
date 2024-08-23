@@ -11,7 +11,4 @@ def run():
 
 def keep_alive():
     t = Thread(target=run)
-    t.start()
-    while True:
-        os.system("echo 'Keep-alive script running...'")
-        time.sleep(1500)
+    t.start()    
