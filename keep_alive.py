@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from threading import Thread
 import os
 import time
+import shedule
 
 app = Flask(__name__)
 @app.route('/')
@@ -14,6 +15,7 @@ def run():
 def keep_alive():
     t = Thread(target=run)
     t.start()
-    while True:
-        os.system("echo 'Keep-alive script running...'")
-        time.sleep(1500)
+
+    os.system("echo 'Keep-alive script running...'")
+
+schedule.every(1500).seconds.do(keep_alive)
