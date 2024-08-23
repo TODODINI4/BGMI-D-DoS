@@ -13,17 +13,8 @@ DB_FILE = 'bot_data.db'
 keep_alive()
 initialize_db()
 
-def adapt_datetime(dt):
-    return dt.isoformat()
-
-def convert_datetime(s):
-    return datetime.fromisoformat(s)
-
-sqlite3.register_adapter(datetime, adapt_datetime)
-sqlite3.register_converter("datetime", convert_datetime)
-
 def db_connection():
-    conn = sqlite3.connect(DB_FILE, detect_types=sqlite3.PARSE_DECLTYPES)
+    conn = sqlite3.connect(DB_FILE)
     return conn
 
 def read_users(bot_id):
@@ -54,20 +45,14 @@ def add_user(user_id, days, bot_id):
     expiration_date = datetime.now() + timedelta(days=days)
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute('''
-        INSERT OR REPLACE INTO users (user_id, expiration_date, bot_id)
-        VALUES (?, ?, ?)
-    ''', (user_id, expiration_date, bot_id))
+    cursor.execute('''INSERT OR REPLACE INTO users (user_id, expiration_date, bot_id) VALUES (?, ?, ?)''', (user_id, expiration_date, bot_id))
     conn.commit()
     conn.close()
 
 def add_bot(token, bot_name, bot_username, owner_username, channel_username):
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute('''
-        INSERT OR REPLACE INTO bot_configs (token, bot_name, bot_username, owner_username, channel_username)
-        VALUES (?, ?, ?, ?, ?)
-    ''', (token, bot_name, bot_username, owner_username, channel_username))
+    cursor.execute('''INSERT OR REPLACE INTO bot_configs (token, bot_name, bot_username, owner_username, channel_username) VALUES (?, ?, ?, ?, ?)''', (token, bot_name, bot_username, owner_username, channel_username))
     conn.commit()
     conn.close()
 
@@ -81,10 +66,7 @@ def remove_user(user_id, bot_id):
 def add_admin(admin_id, bot_id):
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute('''
-        INSERT INTO admins (admin_id, bot_id)
-        VALUES (?, ?)
-    ''', (admin_id, bot_id,))
+    cursor.execute('''INSERT INTO admins (admin_id, bot_id) VALUES (?, ?)''', (admin_id, bot_id,))
     conn.commit()
     conn.close()
 
@@ -508,7 +490,7 @@ def initialize_bot(bot, bot_id):
 def start_bot(bot, bot_id):
     initialize_bot(bot, bot_id)
     print(f"\n{bot_id}) Starting bot with token {bot.token}...")
-    bot.infinity_polling() #bot.polling(none_stop=True, interval=0, timeout=0) --for normal polling
+    bot.infinity_polling() #bot.polling(non_stop=True, interval=0, timeout=0) #for normal polling
 
 threads = []
 bot_tokens = fetch_bot_tokens()
