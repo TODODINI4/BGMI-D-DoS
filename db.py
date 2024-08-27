@@ -82,6 +82,17 @@ def initialize_db():
             timestamp TEXT
         )
     ''')
+    
+    # Create resellers table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS resellers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT,
+            expiration_time TEXT,
+            credit_points INTEGER,
+            timestamp TEXT
+        )
+    ''')
 
     conn.commit()
     conn.close()

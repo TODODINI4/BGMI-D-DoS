@@ -502,43 +502,15 @@ def initialize_bot(bot, bot_id):
                 unit = command_args[1]
                 price = float(command_args[2])
                 timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
                 cursor.execute('''INSERT INTO prices (duration, unit, price, timestamp) VALUES (?, ?, ?, ?)''', (duration, unit, price, timestamp))
                 conn.commit()
+    
                 bot.reply_to(message, f"Price set: {duration} {unit} = {price}")
             else:
                 bot.reply_to(message, "Please use the correct format: /set_price <duration> <unit> <price>")
         except Exception as e:
             bot.reply_to(message, f"Error: {str(e)}")
-    
-    @bot.message_handler(commands=['add_reseller'])
-    def add_reseller(message):
-        try:
-            command_args = message.text.split()[1:]
-            if len(command_args) == 3:
-                user_id = command_args[0]
-                expiration_days = int(command_args[1])
-                credit_points = int(command_args[2])
-                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                expiration_time = (datetime.now() + timedelta(days=expiration_days)).strftime('%Y-%m-%d %H:%M:%S')
-                cursor.execute('''INSERT INTO resellers (user_id, expiration_time, credit_points, timestamp) VALUES (?, ?, ?, ?)''', (user_id, expiration_time, credit_points, timestamp))
-                conn.commit()
-                bot.reply_to(message, f"Reseller added: ID {user_id}, Expiration: {expiration_days} days, Credit: {credit_points}")
-            else:
-                bot.reply_to(message, "Please use the correct format: /add_reseller <user_id> <expiration_days> <credit_points>")
-        except Exception as e:
-            bot.reply_to(message, f"Error: {str(e)}")
-    
-    @bot.message_handler(commands=['show_resellers'])
-    def show_resellers(message):
-        cursor.execute('SELECT user_id, expiration_time, credit_points FROM resellers')
-        rows = cursor.fetchall()
-        if not rows:
-            bot.reply_to(message, "No resellers found.")
-        else:
-            response = "Reseller List:\n"
-            for row in rows:
-                response += f"User ID: {row[0]}, Expiration: {row[1]}, Credit: {row[2]}\n"
-            bot.reply_to(message, response)
     
     return bot
 
