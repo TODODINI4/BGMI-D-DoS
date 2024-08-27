@@ -505,11 +505,8 @@ def initialize_bot(bot, bot_id):
                 unit = command_args[1]
                 price = float(command_args[2])
                 timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                conn = db_connection()
-                cursor = conn.cursor()
                 cursor.execute('''INSERT INTO prices (duration, unit, price, timestamp) VALUES (?, ?, ?, ?)''', (duration, unit, price, timestamp))
                 conn.commit()
-                conn.close()
                 bot.reply_to(message, f"Price set: {duration} {unit} = {price}")
             else:
                 bot.reply_to(message, "Please use the correct format: /set_price <duration> <unit> <price>")
@@ -526,11 +523,8 @@ def initialize_bot(bot, bot_id):
                 credit_points = int(command_args[2])
                 timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 expiration_time = (datetime.now() + timedelta(days=expiration_days)).strftime('%Y-%m-%d %H:%M:%S')
-                conn = db_connection()
-                cursor = conn.cursor()
                 cursor.execute('''INSERT INTO resellers (user_id, expiration_time, credit_points, timestamp) VALUES (?, ?, ?, ?)''', (user_id, expiration_time, credit_points, timestamp))
                 conn.commit()
-                conn.close()
                 bot.reply_to(message, f"Reseller added: ID {user_id}, Expiration: {expiration_days} days, Credit: {credit_points}")
             else:
                 bot.reply_to(message, "Please use the correct format: /add_reseller <user_id> <expiration_days> <credit_points>")
@@ -539,11 +533,8 @@ def initialize_bot(bot, bot_id):
     
     @bot.message_handler(commands=['show_resellers'])
     def show_resellers(message):
-        conn = db_connection()
-        cursor = conn.cursor()
         cursor.execute('SELECT user_id, expiration_time, credit_points FROM resellers')
         rows = cursor.fetchall()
-        conn.close()
         if not rows:
             bot.reply_to(message, "No resellers found.")
         else:
