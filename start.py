@@ -35,6 +35,29 @@ def read_resellers():
     conn.close()
     return [row[0] for row in rows]
 
+def read_admins(bot_id):
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT admin_id FROM admins WHERE bot_id = ?', (bot_id,))
+    admins = cursor.fetchall()
+    conn.close()
+    return [admin[0] for admin in admins]
+
+def get_credit_points(user_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT credit_points FROM resellers WHERE user_id = ?', (user_id,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else None
+
+def update_credit_points(user_id, points):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('UPDATE resellers SET credit_points = credit_points - ? WHERE user_id = ?', (points, user_id))
+    conn.commit()
+    conn.close()
+
 def clear_logs():
     conn = db_connection()
     cursor = conn.cursor()
@@ -147,8 +170,19 @@ def initialize_bot(bot, bot_id):
                 user_to_add = command[1]
                 try:
                     days = int(command[2])
-                    add_user(user_to_add, days, bot_id)
-                    response = f"User {user_to_add} Added Successfully with an expiration of {days} days 👍."
+                    if user_id in allowed_resellers_ids:
+                        credit_points_needed = days * 20
+                        current_credit_points = get_credit_points(user_id)
+                        if current_credit_points is None:
+                            response = "Your account does not exist. Contact admin for assistance."
+                        elif current_credit_points >= credit_points_needed:
+                            add_user(user_to_add, days, bot_id)
+                            update_credit_points(user_id, credit_points_needed)
+                            response = f"User {user_to_add} added successfully with an expiration of {days} days. {credit_points_needed} points deducted."
+                        else:
+                            response = "Insufficient credit points. Please contact admin to purchase more."
+                    else:
+                        response = "You do not have reseller permissions."
                 except ValueError:
                     response = "Invalid number of days specified 🤦."
             else:
@@ -451,8 +485,11 @@ def initialize_bot(bot, bot_id):
     def welcome_plan(message):
         user_name = message.from_user.first_name
         owner_name = get_owner_name(bot_id)
+        conn = db_connection()
+        cursor = conn.cursor()
         cursor.execute('SELECT duration, unit, price FROM prices')
         rows = cursor.fetchall()
+        conn.close()
         if not rows:
             bot.reply_to(message, "The price list is empty.\n\n Use /set_price to Add the price list")
         else:
