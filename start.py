@@ -448,8 +448,16 @@ def initialize_bot(bot, bot_id):
     def welcome_plan(message):
         user_name = message.from_user.first_name
         owner_name = get_owner_name(bot_id)
-        response = f'''Offer :\n1) 3 Days - ₹120/Acc,\n2) 7 Days - ₹250/Acc,\n3) 15 Days - ₹500/Acc,\n4) 30 Days - ₹1000/Acc,\n5) 60 Days (Full Season) - ₹2000/Acc\n\nDm to make purchase {owner_name}\n\n\nNote : All Currencies Accepted via Binance.'''
-        bot.reply_to(message, response)
+        cursor.execute('SELECT duration, unit, price FROM prices')
+        rows = cursor.fetchall()
+        if not rows:
+            bot.reply_to(message, "The price list is empty.\n\n Use /set_price to Add the price list")
+        else:
+            response = "Price List:\n"
+            for row in rows:
+                response += f"{row[0]} {row[1]}: {row[2]}\n"
+            response += f"\n\nDm to make purchase {owner_name}\n\n\nNote : All Currencies Accepted via Binance."
+            bot.reply_to(message, response)
     
     @bot.message_handler(commands=['admincmd'])
     def welcome_admin(message):
@@ -484,6 +492,25 @@ def initialize_bot(bot, bot_id):
         user_id = str(message.chat.id)
         response = f"🤖Your ID: {user_id}"
         bot.reply_to(message, response)
+    
+    @bot.message_handler(commands=['set_price'])
+    def set_price(message):
+        try:
+            command_args = message.text.split()[1:]
+            if len(command_args) == 3:
+                duration = command_args[0]
+                unit = command_args[1]
+                price = float(command_args[2])
+                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+                cursor.execute('''INSERT INTO prices (duration, unit, price, timestamp) VALUES (?, ?, ?, ?)''', (duration, unit, price, timestamp))
+                conn.commit()
+    
+                bot.reply_to(message, f"Price set: {duration} {unit} = {price}")
+            else:
+                bot.reply_to(message, "Please use the correct format: /set_price <duration> <unit> <price>")
+        except Exception as e:
+            bot.reply_to(message, f"Error: {str(e)}")
     
     return bot
 

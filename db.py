@@ -71,6 +71,17 @@ def initialize_db():
             timestamp TEXT
         )
     ''')
+    
+    # Create prices table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS prices (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            duration TEXT,
+            unit TEXT,
+            price REAL,
+            timestamp TEXT
+        )
+    ''')
 
     conn.commit()
     conn.close()
