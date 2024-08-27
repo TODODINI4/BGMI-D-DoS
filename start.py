@@ -26,13 +26,14 @@ def read_users(bot_id):
     conn.close()
     return [user[0] for user in users], [user[1] for user in users]
 
-def read_admins(bot_id):
+def read_resellers():
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT admin_id FROM admins WHERE bot_id = ?', (bot_id,))
-    admins = cursor.fetchall()
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute('SELECT user_id FROM resellers WHERE expiration_time > ?', (current_time,))
+    rows = cursor.fetchall()
     conn.close()
-    return [admin[0] for admin in admins]
+    return [row[0] for row in rows]
 
 def clear_logs():
     conn = db_connection()
@@ -139,7 +140,8 @@ def initialize_bot(bot, bot_id):
     def add_user_command(message):
         user_id = str(message.chat.id)
         allowed_admin_ids = read_admins(bot_id)
-        if user_id in allowed_admin_ids:
+        allowed_resellers_ids = read_resellers()
+        if user_id in allowed_admin_ids or user_id in allowed_resellers_ids:
             command = message.text.split()
             if len(command) > 2:
                 user_to_add = command[1]
@@ -378,8 +380,9 @@ def initialize_bot(bot, bot_id):
         user_id = str(message.chat.id)
         allowed_user_ids, expirations = read_users(bot_id)
         allowed_admin_ids = read_admins(bot_id)
+        allowed_resellers_ids = read_resellers()
         owner_name = get_owner_name(bot_id)
-        if user_id in allowed_user_ids or user_id in allowed_admin_ids:
+        if user_id in allowed_user_ids or user_id in allowed_admin_ids or user_id in allowed_resellers_ids:
             if user_id not in allowed_admin_ids:
                 if user_id in bgmi_cooldown and (datetime.now() - bgmi_cooldown[user_id]).seconds < 3:
                     response = "You Are On Cooldown . Please Wait 3 seconds Before Running The /bgmi Command Again."
