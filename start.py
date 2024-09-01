@@ -430,6 +430,7 @@ def initialize_bot(bot, bot_id):
                 time = int(command[3])
                 if user_id not in allowed_admin_ids and time > 180:
                     response = "Error: Time interval must be less than 180."
+                    bot.reply_to(message, response)
                 else:
                     log_command(user_id, target, port, time, '/bgmi')
                     start_attack_reply(message, target, port, time)  
@@ -446,9 +447,10 @@ def initialize_bot(bot, bot_id):
                     Thread(target=finish_message, args=(message, target, port, time, owner_name, scheduled_time)).start()
             else:
                 response = "✅ Usage :- /bgmi <target> <port> <time>"
+                bot.reply_to(message, response)
         else:
             response = f"You Are Not Authorized To Use This Command.\n\nKindly Contact Admin to purchase the Access : {owner_name}."
-        bot.reply_to(message, response)
+            bot.reply_to(message, response)
 
     def finish_message(message, target, port, attack_time, owner_name, scheduled_time):
         while datetime.now() < scheduled_time:
