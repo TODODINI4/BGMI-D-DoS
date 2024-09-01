@@ -181,8 +181,11 @@ def initialize_bot(bot, bot_id):
                             response = f"User {user_to_add} added successfully with an expiration of {days} days. {credit_points_needed} points deducted."
                         else:
                             response = "Insufficient credit points. Please contact admin to purchase more."
+                    elif user_id in allowed_admin_ids:
+                        add_user(user_to_add, days, bot_id)
+                        response = f"User {user_to_add} Added Successfully with an expiration of {days} days 👍."
                     else:
-                        response = "You do not have reseller permissions."
+                        response = "You do not have the permission to use this command."
                 except ValueError:
                     response = "Invalid number of days specified 🤦."
             else:
