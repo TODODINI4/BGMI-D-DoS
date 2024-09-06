@@ -583,18 +583,6 @@ def initialize_bot(bot, bot_id):
         except Exception as e:
             bot.reply_to(message, f"Error: {str(e)}")
     
-    @bot.message_handler(commands=['clear_prices'])
-    def clear_prices(message):
-        try:
-            conn = db_connection()
-            cursor = conn.cursor()
-            cursor.execute('DELETE FROM prices')
-            conn.commit()
-            conn.close()
-            bot.reply_to(message, "All prices have been cleared.")
-        except Exception as e:
-            bot.reply_to(message, f"Error: {str(e)}")
-    
     @bot.message_handler(commands=['add_reseller'])
     def add_reseller(message):
         try:
