@@ -375,7 +375,7 @@ def initialize_bot(bot, bot_id):
     @bot.message_handler(commands=['mylogs'])
     def show_command_logs(message):
         user_id = str(message.chat.id)
-        allowed_user_ids = read_users(bot_id)
+        allowed_user_ids, expirations = read_users(bot_id)
         owner_name = get_owner_name(bot_id)
         if user_id in allowed_user_ids:
             conn = db_connection()
@@ -427,7 +427,7 @@ def initialize_bot(bot, bot_id):
     @bot.message_handler(commands=['bgmi'])
     def handle_bgmi(message):
         user_id = str(message.chat.id)
-        allowed_user_ids = read_users(bot_id)
+        allowed_user_ids, expirations = read_users(bot_id)
         allowed_admin_ids = read_admins(bot_id)
         allowed_resellers_ids = read_resellers()
         owner_name = get_owner_name(bot_id)
@@ -553,7 +553,7 @@ def initialize_bot(bot, bot_id):
             command = message.text.split(maxsplit=1)
             if len(command) > 1:
                 message_to_broadcast = "⚠️ Message To All Users By Admin:\n\n" + command[1]
-                allowed_user_ids = read_users(bot_id)
+                allowed_user_ids, expirations = read_users(bot_id)
                 for user_id in allowed_user_ids:
                     try:
                         bot.send_message(user_id, message_to_broadcast)
