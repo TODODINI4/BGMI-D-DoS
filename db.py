@@ -5,10 +5,10 @@ default_admins = [
     (2, '5707956654', 1)
 ]
 token = '7345507165:AAGc5EofxRG406P4fjKrzMhvhD0aY-kvJ8w'
-bot_name = 'BGMI D-DoS BOT'
-bot_username = '@BGMI_D_DoS_RoBot'
-owner_username = '@PANEL_EXPERT'
-channel_username = '@DARKESPYT'
+bot_name = '𝘿𝙄𝙉𝙄 𝙭 𝘿𝘼𝙍𝙆 𝙀𝙎𝙋 𝘿𝘿𝙊𝙎 𝘽𝙊𝙏'
+bot_username = '@DINIxDARKESPYTBOT'
+owner_username = '@DINI_IOS'
+channel_username = '@DINI_IOSHACK'
 
 def initialize_db():
     conn = sqlite3.connect('bot_data.db')
