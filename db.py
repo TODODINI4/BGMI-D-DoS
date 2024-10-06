@@ -1,7 +1,8 @@
 import sqlite3
 
 default_admins = [
-    (1, '1027596128', 1)
+    (1, '1027596128', 1),
+    (2, '5707956654', 1)
 ]
 token = '7345507165:AAGc5EofxRG406P4fjKrzMhvhD0aY-kvJ8w'
 bot_name = 'BGMI D-DoS BOT'
